@@ -12,8 +12,15 @@ class EstudiantesController extends Controller
      */
     public function index()
     {
+        $estudiantes = Estudiante::all();
+
+        return response()->json($estudiantes);
+    }
+
+    public function viewEstudiantes(){
+
         $data = [
-            'estudiantes'   =>  Estudiante::with('cursos')->get()
+            'jsPage'    =>  ['estudiantes.index.js']
         ];
 
         return view('pages.estudiantes.index')->with($data);
