@@ -1,0 +1,229 @@
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (arm64)
+--
+-- Host: 127.0.0.1    Database: laravel
+-- ------------------------------------------------------
+-- Server version	8.3.0
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `calificaciones`
+--
+
+DROP TABLE IF EXISTS `calificaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `calificaciones` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `calificacion` int unsigned NOT NULL DEFAULT '0',
+  `estudiante_id` int unsigned NOT NULL,
+  `curso_id` int unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `calificaciones`
+--
+
+LOCK TABLES `calificaciones` WRITE;
+/*!40000 ALTER TABLE `calificaciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `calificaciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `curso_estudiante`
+--
+
+DROP TABLE IF EXISTS `curso_estudiante`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `curso_estudiante` (
+  `estudiante_id` bigint unsigned NOT NULL,
+  `curso_id` bigint unsigned NOT NULL,
+  `calificacion` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `curso_estudiante_estudiante_id_foreign` (`estudiante_id`),
+  KEY `curso_estudiante_curso_id_foreign` (`curso_id`),
+  CONSTRAINT `curso_estudiante_curso_id_foreign` FOREIGN KEY (`curso_id`) REFERENCES `cursos` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `curso_estudiante_estudiante_id_foreign` FOREIGN KEY (`estudiante_id`) REFERENCES `estudiantes` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `curso_estudiante`
+--
+
+LOCK TABLES `curso_estudiante` WRITE;
+/*!40000 ALTER TABLE `curso_estudiante` DISABLE KEYS */;
+INSERT INTO `curso_estudiante` VALUES (2,7,0,NULL,NULL),(2,1,0,NULL,NULL);
+/*!40000 ALTER TABLE `curso_estudiante` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cursos`
+--
+
+DROP TABLE IF EXISTS `cursos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cursos` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profesor_id` int unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cursos`
+--
+
+LOCK TABLES `cursos` WRITE;
+/*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
+INSERT INTO `cursos` VALUES (1,'Economía I',1,NULL,NULL),(7,'Programación I',21,'2024-12-07 22:42:23','2024-12-07 22:42:23');
+/*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estudiantes`
+--
+
+DROP TABLE IF EXISTS `estudiantes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `estudiantes` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_paterno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_materno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estudiantes`
+--
+
+LOCK TABLES `estudiantes` WRITE;
+/*!40000 ALTER TABLE `estudiantes` DISABLE KEYS */;
+INSERT INTO `estudiantes` VALUES (2,'Lavonne','Emard','Upton','2024-12-07 17:46:21','2024-12-07 17:46:21'),(3,'Barry','Doyle','Cronin','2024-12-07 17:46:21','2024-12-07 17:46:21'),(4,'Lesly','Adams','Prohaska','2024-12-07 17:46:21','2024-12-07 17:46:21'),(6,'Naomi','Hayes','Cartwright','2024-12-07 17:46:21','2024-12-07 17:46:21'),(7,'Maci','Spinka','Doyle','2024-12-07 17:46:21','2024-12-07 17:46:21'),(8,'Keara','Kohler','Koch','2024-12-07 17:46:21','2024-12-07 17:46:21'),(9,'Michel','Schultz','Mraz','2024-12-07 17:46:21','2024-12-07 17:46:21'),(10,'Guy','Christiansen','King','2024-12-07 17:46:21','2024-12-07 17:46:21'),(11,'Dagmar','Reichert','Heaney','2024-12-07 17:46:21','2024-12-07 17:46:21'),(12,'Gilberto','Wolf','Schaefer','2024-12-07 17:46:21','2024-12-07 17:46:21'),(13,'Tito','Green','Bernhard','2024-12-07 17:46:21','2024-12-07 17:46:21'),(14,'Merle','Towne','Zulauf','2024-12-07 17:46:21','2024-12-07 17:46:21'),(15,'Stanton','O\'Kon','Koelpin','2024-12-07 17:46:21','2024-12-07 17:46:21'),(16,'Angeline','Grimes','Rolfson','2024-12-07 17:46:21','2024-12-07 17:46:21'),(17,'Richmond','Koelpin','Turcotte','2024-12-07 17:46:21','2024-12-07 17:46:21'),(18,'Dannie','Tremblay','Lakin','2024-12-07 17:46:21','2024-12-07 17:46:21'),(19,'Haven','Wolf','Harris','2024-12-07 17:46:21','2024-12-07 17:46:21'),(20,'Jacquelyn','Jones','Hamill','2024-12-07 17:46:21','2024-12-07 17:46:21'),(21,'Asia','Schumm','McDermott','2024-12-07 17:46:21','2024-12-07 17:46:21'),(22,'Arianna','McKenzie','Schamberger','2024-12-07 17:46:21','2024-12-07 17:46:21'),(23,'Janessa','Torp','Haag','2024-12-07 17:46:21','2024-12-07 17:46:21'),(24,'Earline','Lynch','Bartoletti','2024-12-07 17:46:21','2024-12-07 17:46:21'),(25,'Aliya','Lebsack','Walker','2024-12-07 17:46:21','2024-12-07 17:46:21'),(26,'Aurelia','Will','D\'Amore','2024-12-07 17:46:21','2024-12-07 17:46:21'),(27,'Delbert','Lehner','Bednar','2024-12-07 17:46:21','2024-12-07 17:46:21'),(28,'Milton','Mills','Maggio','2024-12-07 17:46:21','2024-12-07 17:46:21'),(29,'Aditya','Turcotte','Johns','2024-12-07 17:46:21','2024-12-07 17:46:21'),(30,'Christ','Stroman','Feil','2024-12-07 17:46:21','2024-12-07 17:46:21'),(31,'Patience','Dach','Hammes','2024-12-07 17:46:21','2024-12-07 17:46:21'),(32,'Reyes','Dibbert','Skiles','2024-12-07 17:46:21','2024-12-07 17:46:21'),(33,'Berta','Hintz','Johnson','2024-12-07 17:46:21','2024-12-07 17:46:21'),(34,'Clovis','Kris','Will','2024-12-07 17:46:21','2024-12-07 17:46:21'),(35,'Heloise','Tromp','Cummerata','2024-12-07 17:46:21','2024-12-07 17:46:21'),(36,'Bernie','Schmeler','Rogahn','2024-12-07 17:46:21','2024-12-07 17:46:21'),(37,'Mya','Koepp','Reichert','2024-12-07 17:46:21','2024-12-07 17:46:21'),(38,'Llewellyn','Gislason','Rice','2024-12-07 17:46:21','2024-12-07 17:46:21'),(39,'Ezequiel','Spencer','McGlynn','2024-12-07 17:46:21','2024-12-07 17:46:21'),(40,'Sabryna','Shields','Purdy','2024-12-07 17:46:21','2024-12-07 17:46:21'),(41,'Royal','Pfannerstill','Monahan','2024-12-07 17:46:21','2024-12-07 17:46:21'),(42,'Mallory','Schaefer','Hahn','2024-12-07 17:46:21','2024-12-07 17:46:21'),(43,'Jorge','Conn','Haag','2024-12-07 17:46:21','2024-12-07 17:46:21'),(44,'Reilly','Bergstrom','Jaskolski','2024-12-07 17:46:21','2024-12-07 17:46:21'),(45,'Eileen','Goodwin','Hamill','2024-12-07 17:46:21','2024-12-07 17:46:21'),(46,'Hanna','Windler','Lindgren','2024-12-07 17:46:21','2024-12-07 17:46:21'),(47,'Jasen','Kuphal','Smitham','2024-12-07 17:46:21','2024-12-07 17:46:21'),(48,'Neha','Koelpin','Sporer','2024-12-07 17:46:21','2024-12-07 17:46:21'),(49,'Maryam','Mueller','Kling','2024-12-07 17:46:21','2024-12-07 17:46:21'),(50,'Joannie','Kuhlman','Ward','2024-12-07 17:46:21','2024-12-07 17:46:21'),(51,'Price','Blick','Schultz','2024-12-07 17:46:21','2024-12-07 17:46:21'),(52,'Mckenzie','Renner','Cormier','2024-12-07 17:46:21','2024-12-07 17:46:21'),(53,'Alejandrin','Powlowski','Kuphal','2024-12-07 17:46:21','2024-12-07 17:46:21'),(54,'Laurel','Little','McDermott','2024-12-07 17:46:21','2024-12-07 17:46:21'),(55,'Iliana','O\'Keefe','Berge','2024-12-07 17:46:21','2024-12-07 17:46:21'),(56,'Dixie','Reinger','Marks','2024-12-07 17:46:21','2024-12-07 17:46:21'),(57,'Aida','Murazik','Lockman','2024-12-07 17:46:21','2024-12-07 17:46:21'),(58,'Hallie','Friesen','Shanahan','2024-12-07 17:46:21','2024-12-07 17:46:21'),(59,'Payton','Mann','Gottlieb','2024-12-07 17:46:21','2024-12-07 17:46:21'),(60,'Colleen','Swaniawski','O\'Hara','2024-12-07 17:46:21','2024-12-07 17:46:21'),(61,'Tyrique','Funk','Donnelly','2024-12-07 17:46:21','2024-12-07 17:46:21'),(62,'Dereck','Schiller','Hyatt','2024-12-07 17:46:21','2024-12-07 17:46:21'),(63,'Sammy','Quigley','Miller','2024-12-07 17:46:21','2024-12-07 17:46:21'),(64,'Alexa','Pfannerstill','O\'Conner','2024-12-07 17:46:21','2024-12-07 17:46:21'),(65,'Breanne','Bergnaum','Hirthe','2024-12-07 17:46:21','2024-12-07 17:46:21'),(66,'Kay','Marks','Durgan','2024-12-07 17:46:21','2024-12-07 17:46:21'),(67,'Wayne','Jones','Roberts','2024-12-07 17:46:21','2024-12-07 17:46:21'),(68,'Gail','Glover','Lindgren','2024-12-07 17:46:21','2024-12-07 17:46:21'),(69,'Myrl','King','Yost','2024-12-07 17:46:21','2024-12-07 17:46:21'),(70,'Landen','Moore','Reichert','2024-12-07 17:46:21','2024-12-07 17:46:21'),(71,'Hailie','Heller','Hickle','2024-12-07 17:46:21','2024-12-07 17:46:21'),(72,'Aniya','Muller','Kuhlman','2024-12-07 17:46:21','2024-12-07 17:46:21'),(73,'Emilie','Conroy','Christiansen','2024-12-07 17:46:21','2024-12-07 17:46:21'),(74,'Priscilla','Powlowski','Turner','2024-12-07 17:46:21','2024-12-07 17:46:21'),(75,'Jarrett','Roberts','Hayes','2024-12-07 17:46:21','2024-12-07 17:46:21'),(76,'Jovanny','Senger','Stroman','2024-12-07 17:46:21','2024-12-07 17:46:21'),(77,'April','Rowe','Douglas','2024-12-07 17:46:21','2024-12-07 17:46:21'),(78,'Brennon','Bashirian','Effertz','2024-12-07 17:46:21','2024-12-07 17:46:21'),(79,'Armani','Beer','Padberg','2024-12-07 17:46:21','2024-12-07 17:46:21'),(80,'Wilfredo','Oberbrunner','Rolfson','2024-12-07 17:46:21','2024-12-07 17:46:21'),(81,'Guido','Stoltenberg','Schulist','2024-12-07 17:46:21','2024-12-07 17:46:21'),(82,'Alayna','Quitzon','Feeney','2024-12-07 17:46:21','2024-12-07 17:46:21'),(83,'Kali','Ernser','Grimes','2024-12-07 17:46:21','2024-12-07 17:46:21'),(84,'Garett','West','Fisher','2024-12-07 17:46:21','2024-12-07 17:46:21'),(85,'Aniya','DuBuque','White','2024-12-07 17:46:21','2024-12-07 17:46:21'),(86,'Myrna','Halvorson','Jones','2024-12-07 17:46:21','2024-12-07 17:46:21'),(87,'Lorenz','Gerlach','Lang','2024-12-07 17:46:21','2024-12-07 17:46:21'),(88,'Letitia','Carter','Hills','2024-12-07 17:46:21','2024-12-07 17:46:21'),(89,'Gustave','Wisozk','Douglas','2024-12-07 17:46:21','2024-12-07 17:46:21'),(90,'Frances','Hintz','Sawayn','2024-12-07 17:46:21','2024-12-07 17:46:21'),(91,'Trycia','Morissette','Wuckert','2024-12-07 17:46:21','2024-12-07 17:46:21'),(92,'Nona','Collins','Nikolaus','2024-12-07 17:46:21','2024-12-07 17:46:21'),(93,'Rigoberto','Kuvalis','Goodwin','2024-12-07 17:46:21','2024-12-07 17:46:21'),(94,'Willis','Hane','Moen','2024-12-07 17:46:21','2024-12-07 17:46:21'),(95,'Gardner','Prohaska','Schumm','2024-12-07 17:46:21','2024-12-07 17:46:21'),(96,'Gwendolyn','Harvey','Powlowski','2024-12-07 17:46:21','2024-12-07 17:46:21'),(97,'Jerrold','Pfeffer','Swaniawski','2024-12-07 17:46:21','2024-12-07 17:46:21'),(98,'Yesenia','Watsica','O\'Hara','2024-12-07 17:46:21','2024-12-07 17:46:21'),(99,'Jena','Kuhn','Kassulke','2024-12-07 17:46:21','2024-12-07 17:46:21'),(100,'Kaela','Ratke','Waelchi','2024-12-07 17:46:21','2024-12-07 17:46:21'),(101,'Victor','Ayala','de la Rosa','2024-12-07 18:48:54','2024-12-07 18:48:54'),(102,'Alan','Martinez','Perez','2024-12-07 18:49:29','2024-12-07 18:49:29'),(103,'Ana','Juarez','Vargas','2024-12-07 18:49:46','2024-12-07 18:49:46');
+/*!40000 ALTER TABLE `estudiantes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,'2019_12_14_000001_create_personal_access_tokens_table',1),(2,'2024_11_24_023338_create_estudiantes_table',1),(3,'2024_11_24_031456_create_profesors_table',1),(4,'2024_11_24_031841_create_calificacions_table',1),(5,'2024_11_24_031856_create_cursos_table',1),(6,'2024_12_07_105353_create_curso_estudiante_table',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+LOCK TABLES `personal_access_tokens` WRITE;
+/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profesores`
+--
+
+DROP TABLE IF EXISTS `profesores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profesores` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_paterno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_materno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profesores`
+--
+
+LOCK TABLES `profesores` WRITE;
+/*!40000 ALTER TABLE `profesores` DISABLE KEYS */;
+INSERT INTO `profesores` VALUES (1,'Einar','Emmerich','Beier','2024-12-07 17:46:21','2024-12-07 17:46:21'),(2,'Meagan','Schneider','Hauck','2024-12-07 17:46:21','2024-12-07 17:46:21'),(4,'Rhett','Doyle','Runolfsdottir','2024-12-07 17:46:21','2024-12-07 17:46:21'),(5,'Theresia','Rice','Reynolds','2024-12-07 17:46:21','2024-12-07 17:46:21'),(6,'Margarette','Kerluke','Olson','2024-12-07 17:46:21','2024-12-07 17:46:21'),(7,'Gudrun','Lowe','Koss','2024-12-07 17:46:21','2024-12-07 17:46:21'),(8,'Kara','Boyer','Hessel','2024-12-07 17:46:21','2024-12-07 17:46:21'),(9,'Kiara','Smith','Kuhn','2024-12-07 17:46:21','2024-12-07 17:46:21'),(10,'John','Blanda','Mayer','2024-12-07 17:46:21','2024-12-07 17:46:21'),(11,'Clotilde','Aufderhar','Lueilwitz','2024-12-07 17:46:21','2024-12-07 17:46:21'),(12,'Wilmer','Shields','Hane','2024-12-07 17:46:21','2024-12-07 17:46:21'),(13,'Pansy','Kihn','Keebler','2024-12-07 17:46:21','2024-12-07 17:46:21'),(14,'Brooke','Marquardt','Zulauf','2024-12-07 17:46:21','2024-12-07 17:46:21'),(15,'Scotty','Zulauf','Hoppe','2024-12-07 17:46:21','2024-12-07 17:46:21'),(16,'Bailey','Dibbert','Will','2024-12-07 17:46:21','2024-12-07 17:46:21'),(17,'Gabriel','Dickinson','Ullrich','2024-12-07 17:46:21','2024-12-07 17:46:21'),(18,'Alex','Rippin','Pfannerstill','2024-12-07 17:46:21','2024-12-07 17:46:21'),(19,'Oran','Bahringer','Fadel','2024-12-07 17:46:21','2024-12-07 17:46:21'),(20,'Carolanne','Wisozk','Nolan','2024-12-07 17:46:21','2024-12-07 17:46:21'),(21,'Victor Saul','Ayala','de la Rosa','2024-12-07 22:41:17','2024-12-07 22:41:17'),(22,'Maria','Ayala','Vargas','2024-12-07 22:41:46','2024-12-07 22:41:46');
+/*!40000 ALTER TABLE `profesores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'laravel'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-12-07 11:09:52
