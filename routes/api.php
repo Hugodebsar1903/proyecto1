@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CursosController;
 use App\Http\Controllers\EstudiantesController;
+use App\Http\Controllers\ProfesoresController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +22,5 @@ Route::get('ping', function(){
 });
 
 Route::resource('estudiantes', EstudiantesController::class);
+Route::resource('cursos', CursosController::class);
+Route::resource('profesores', ProfesoresController::class);

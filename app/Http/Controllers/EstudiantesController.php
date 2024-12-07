@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\Estudiante;
+use Exception;
 use Illuminate\Http\Request;
 
 class EstudiantesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $estudiantes = Estudiante::all();
@@ -20,26 +20,77 @@ class EstudiantesController extends Controller
     public function viewEstudiantes(){
 
         $data = [
-            'jsPage'    =>  ['estudiantes.index.js']
+            'active_page'   =>  'estudiantes',
+            'jsPage'        =>  ['estudiantes.index.js']
         ];
 
         return view('pages.estudiantes.index')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function agregarCurso($id){
+
+        $data = [
+            'active_page'   =>  'estudiantes',
+            'jsPage'        =>  ['estudiantes.agregarCurso.js'],
+            'estudiante'    =>  Estudiante::where('id', $id)->with('cursos')->first(),
+            'cursos'        =>  Curso::all()
+        ];
+
+        return view('pages.estudiantes.agregarCurso')->with($data);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function guardarCurso(Request $req){
+
+        $estudiante = Estudiante::findOrFail($req->estudiante);
+
+        try{
+            $estudiante->cursos()->attach($req->curso);
+            return response()->json([], 200);
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+
+    }
+
+    public function eliminarCurso(Request $req){
+
+        $estudiante = Estudiante::findOrFail($req->estudiante);
+
+        try{
+            $estudiante->cursos()->detach($req->curso);
+            return response()->json([], 200);
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+
+    }
+
+    public function create()
+    {
+        $data = [
+            'active_page'   =>  'estudiantes',
+            'jsPage'        =>  ['estudiantes.crear.js']
+        ];
+
+        return view('pages.estudiantes.crear')->with($data);
+    }
+
     public function store(Request $request)
     {
-        //
+        $estudiante = new Estudiante();
+
+        $estudiante->nombre = $request->nombre;
+        $estudiante->apellido_paterno = $request->apellido_paterno;
+        $estudiante->apellido_materno = $request->apellido_materno;
+
+        try{
+
+            $estudiante->save();
+
+        }catch(Exception $e){
+            return response()->json($e, 422);
+        }
     }
 
     /**
@@ -71,6 +122,16 @@ class EstudiantesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+
+            Estudiante::find($id)->delete();
+
+            return response()->json([], 200);
+
+        }catch(Exception $e){
+
+            return response()->json($e, 422);
+
+        }
     }
 }

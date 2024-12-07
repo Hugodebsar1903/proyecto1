@@ -1,20 +1,17 @@
 $(document).ready(function () {
-    axios.get("/api/estudiantes").then((r) => {
-        const users = r.data;
-        const tableBody = document.querySelector("#estudiantesTable tbody");
+    axios.get("/api/cursos").then((r) => {
+        const cursos = r.data;
+        const tableBody = document.querySelector("#cursosTable tbody");
 
         // Llena la tabla con los datos
-        users.forEach((user) => {
+        cursos.forEach((cursos) => {
             const row = `
                     <tr>
-                        <td>${user.id}</td>
-                        <td class="text-center">${user.nombre}</td>
-                        <td class="text-center">${user.apellido_paterno}</td>
-                        <td class="text-center">${user.apellido_materno}</td>
-                        <td class="text-center">${user.created_at}</td>
+                        <td>${cursos.id}</td>
+                        <td class="text-center">${cursos.nombre}</td>
+                        <td class="text-center">${cursos.profesor.fullname}</td>
                         <td class="d-flex justify-content-around">
-                            <a class="btn btn-success" href="/estudiante/agregar-curso/${user.id}">Cursos</a>
-                            <a class="btn btn-danger" data-id="${user.id}" href="javascript:void(0)"">Alumno</a>
+                            <a class="btn btn-danger" data-id="${cursos.id}" href="javascript:void(0)"">Eliminar</a>
                         </td>
                     </tr>
                 `;
@@ -22,11 +19,11 @@ $(document).ready(function () {
         });
 
         // Inicializa DataTables
-        $("#estudiantesTable").DataTable({
+        $("#cursosTable").DataTable({
             columnDefs: [
                 {
-                    targets: 0, // Índice de la primera columna
-                    className: 'text-center' // Clase para alinear al centro
+                    targets: 0,
+                    className: 'text-center'
                 }
             ],
             language: {
@@ -48,7 +45,7 @@ $(document).on("click", "a.btn-danger", function () {
         denyButtonText: `Cancelar`,
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`/estudiantes/${id}`).then((r) => {
+            axios.delete(`/api/cursos/${id}`).then((r) => {
                 Swal.fire({
                     title: "Hecho",
                     icon: "success",

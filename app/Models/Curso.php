@@ -17,7 +17,7 @@ class Curso extends Model
     protected $with = ['profesor'];
 
     public function estudiantes():BelongsToMany{
-        return $this->belongsToMany(Estudiante::class, 'curso_estudiante');
+        return $this->belongsToMany(Estudiante::class, 'curso_estudiante')->withPivot('calificacion');
     }
 
     public function profesor():BelongsTo{
